@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+
+    <style>
+      /* ORDER TAB */
+      #orderTab {
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      /* PRODUCT BANNERS */
+      .product-banner {
+        width: 32%;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        margin-right: 1%;
+      }
+      .input-group {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+      }
+
+      .input-icon {
+        position: relative;
+      }
+
+      .input-icon i {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 14px;
+        color: #666;
+      }
+
+      .input-icon input,
+      .input-icon select {
+        width: 100%;
+        height: 38px;
+        padding-left: 35px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 14px;
+        box-sizing: border-box;
+      }
+
+      .input-icon input:focus,
+      .input-icon select:focus {
+        border-color: #3498db;
+        outline: none;
+      }
+      /* INPUT GROUP */
+      .input-group {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin-top: 10px;
+        margin-bottom: 20px;
+      }
+
+      /* INPUT WITH ICON */
+      .input-icon {
+        position: relative;
+      }
+
+      .input-icon i {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #777;
+      }
+
+      .input-icon input {
+        width: 100%;
+        padding: 10px 10px 10px 35px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        outline: none;
+      }
+
+      .input-icon input:focus {
+        border-color: #2ecc71;
+      }
+
+      /* ADD BUTTON */
+      .add-btn {
+        background: #2ecc71;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 10px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .add-btn:hover {
+        background: #27ae60;
+      }
+
+      /* TABLE */
+      #orderTable {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      #orderTable thead {
+        background: #34495e;
+        color: white;
+      }
+
+      #orderTable th,
+      #orderTable td {
+        padding: 10px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+      }
+
+      #orderTable tbody tr:hover {
+        background: #f1f1f1;
+      }
+
+      /* TABLE BUTTONS */
+      #orderTable button {
+        padding: 6px 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      #orderTable button:first-child {
+        background: #3498db;
+        color: white;
+      }
+
+      #orderTable button:last-child {
+        background: #e74c3c;
+        color: white;
+      }
+
+      #orderTable button:hover {
+        opacity: 0.9;
+      }
+
+      /* SUBMIT / RESET */
+      .tr {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+      }
+
+      .tr button {
+        padding: 10px 18px;
+        border: none;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .tr button:first-child {
+        background: #16a085;
+        color: white;
+      }
+
+      .tr button:last-child {
+        background: #e67e22;
+        color: white;
+      }
+
+      .tr button:hover {
+        opacity: 0.9;
+      }
+      /* RESPONSIVE INPUT GROUP */
+      /* RESET */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      /* BODY */
+      body {
+        display: flex;
+        background: #f4f6f9;
+      }
+
+      /* SIDEBAR MENU */
+      .menu {
+        width: 230px;
+        height: 100vh;
+        background: #2c3e50;
+        position: fixed;
+        left: 0;
+        top: 0;
+      }
+
+      .menu ul {
+        list-style: none;
+      }
+
+      .menu ul li {
+        width: 100%;
+      }
+
+      .menu ul li a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #fff;
+        text-decoration: none;
+        padding: 14px 20px;
+        transition: 0.3s;
+      }
+
+      .menu ul li a:hover {
+        background: #34495e;
+      }
+
+      .menu ul li a.active {
+        background: #1abc9c;
+      }
+
+      /* PROFILE IN SIDEBAR */
+      .profile {
+        text-align: center;
+        padding: 20px 0;
+        color: white;
+      }
+
+      .img-box {
+        width: 60px;
+        height: 60px;
+        margin: auto;
+        margin-bottom: 10px;
+      }
+
+      .img-box img {
+        width: 100%;
+        border-radius: 50%;
+      }
+
+      /* LOGOUT */
+      .log-out a {
+        color: #ff6b6b;
+      }
+
+      /* TOP BAR */
+      .topar {
+        position: fixed;
+        left: 230px;
+        top: 0;
+        width: calc(100% - 230px);
+        height: 60px;
+        background: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      /* LOGO */
+      .logo span {
+        font-size: 22px;
+        font-weight: bold;
+        color: #2c3e50;
+      }
+
+      /* RIGHT SECTION */
+      .right-section {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .profile-pic {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+      }
+
+      .profile-name {
+        font-weight: 500;
+      }
+      a {
+        text-decoration: none;
+        color: white;
+      }
+      .profile-name {
+        font-weight: 500;
+        color: black;
+      }
+
+      /* LOGOUT BUTTON */
+      .logout-btn {
+        padding: 7px 14px;
+        border: none;
+        background: #e74c3c;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .logout-btn:hover {
+        background: #c0392b;
+      }
+
+      /* CONTENT AREA */
+      .tab-content {
+        margin-left: 230px;
+        margin-top: 80px;
+        padding: 20px;
+      }
+
+      /* INPUT GROUP */
+      .input-group {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+      }
+
+      .input-icon {
+        position: relative;
+      }
+
+      .input-icon i {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #666;
+      }
+
+      .input-icon input,
+      .input-icon select {
+        padding: 8px 8px 8px 35px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      /* ADD BUTTON */
+      .add-btn {
+        background: #1abc9c;
+        border: none;
+        color: white;
+        padding: 8px 18px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .add-btn:hover {
+        background: #16a085;
+      }
+
+      /* TABLE */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      table th,
+      table td {
+        padding: 12px;
+        border-bottom: 1px solid #ddd;
+        text-align: left;
+      }
+
+      table th {
+        background: #2c3e50;
+        color: white;
+      }
+
+      table tr:hover {
+        background: #f1f1f1;
+      }
+      .menu {
+        background-color: #123;
+        width: 230px;
+        height: 100vh;
+        padding: 20px;
+      }
+      ul {
+        list-style: none;
+        position: absolute;
+        height: 95%;
+      }
+      ul li a {
+        display: block;
+        text-decoration: none;
+        padding: 10px;
+        margin: 0px 0%;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 40px;
+        transition: 0.5s;
+      }
+      ul li a:hover,
+      .active {
+        background-color: #ffffff55;
+        transition: color 0.3s ease;
+      }
+
+      .log-out {
+        position: relative;
+        bottom: 0px;
+        width: 190px;
+      }
+      .log-out a {
+        background-color: red;
+      }
+      .logo span {
+        display: inline-block;
+        font-size: 50px;
+        font-weight: bold;
+        font-family:
+          "Times New Roman",
+          Times,
+          serif,
+          Arial black italic;
+        color: #2c3e50;
+        animation: slideIn 1s ease-out;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <body>
+      <div class="menu">
+        <ul>
+          <li class="profile">
+            <div class="img-box">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                alt="Profile"
+              />
+            </div>
+            <h>abdulahdi</h>
+          </li>
+          <li>
+            <a href="index.html" class="active">
+              <i class="fas fa-home"></i>
+              <p>dashboard</p>
+            </a>
+          </li>
+          <li>
+            <a href="user.html">
+              <i class="fas fa-users"></i>
+              <p>users</p>
+            </a>
+          </li>
+          <li>
+            <a href="product.html">
+              <i class="fas fa-table"></i>
+              <p>products</p>
+            </a>
+          </li>
+          <li>
+            <a href="customer.html">
+              <i class="fas fa-users"></i>
+              <p>customers</p>
+            </a>
+          </li>
+          <li>
+            <a href="order-online.html">
+              <i class="fas fa-shopping-cart"></i>
+              <p>orders</p>
+            </a>
+          </li>
+          <li>
+            <a href="sales.html">
+              <i class="fas fa-chart-bar"></i>
+              <p>analytics</p>
+            </a>
+          </li>
+          <li>
+            <a href="sitting.html">
+              <i class="fas fa-cog"></i>
+              <p>settings</p>
+            </a>
+          </li>
+          <li class="log-out">
+            <a href="kgl.html">
+              <i class="fas fa-sign-out-alt"></i>
+              <p>logout</p>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="topar">
+        <div class="logo">
+          <span>karibu</span>
+        </div>
+        <p>orders</p>
+
+        <div class="right-section">
+          <div class="profile">
+            <img src="pictuer/OIP (9).webp" class="profile-pic" />
+            <span class="profile-name">abdulahdi</span>
+          </div>
+
+          <a href="kgl.html" class="logout-btn">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Logout
+          </a>
+        </div>
+      </div>
+      <!-- Orders Tab -->
+      <div id="orderTab" class="tab-content">
+        <img src="pictuer/OIP (7).webp" alt="Maize" class="product-banner" />
+        <img src="pictuer/OIP (9).webp" alt="Maize" class="product-banner" />
+        <img src="pictuer/OIP (8).webp" alt="Maize" class="product-banner" />
+
+        <div class="input-group">
+          <div class="input-icon">
+            <i class="fa-solid fa-user"></i>
+            <input type="text" id="orderCustomer" placeholder="Customer Name" />
+          </div>
+
+          <div class="input-icon">
+            <i class="fa-solid fa-box"></i>
+            <input type="text" id="orderProduct" placeholder="Product" />
+          </div>
+
+          <div class="input-icon">
+            <i class="fa-solid fa-dollar-sign"></i>
+            <input type="number" id="orderPrice" placeholder="Price" />
+          </div>
+
+          <div class="input-icon">
+            <i class="fa-solid fa-calendar-days"></i>
+            <input type="datetime-local" id="orderDate" />
+          </div>
+
+          <div class="input-icon">
+            <i class="fa-solid fa-phone"></i>
+            <input type="text" id="orderPhone" placeholder="Phone" />
+          </div>
+
+          <div class="input-icon">
+            <i class="fa-solid fa-map-marker-alt"></i>
+            <input type="text" id="orderAddress" placeholder="Address" />
+          </div>
+
+          <button class="add-btn" onclick="addOrder()">Add</button>
+        </div>
+
+        <table id="orderTable">
+          <thead>
+            <tr>
+              <th>Customer</th>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Date</th>
+              <th>Number</th>
+              <th>Address</th>
+              <th>Edit</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <div class="tr">
+          <button onclick="submitProducts()">Submit</button>
+          <button onclick="resetProducts()">Reset</button>
+        </div>
+      </div>
+
+      <!-- Edit Modal -->
+      <div class="modal" id="editModal">
+        <div class="modal-content">
+          <span class="modal-close" onclick="closeModal()">×</span>
+          <input type="text" id="modalName" placeholder="Name" />
+          <input type="text" id="modalValue" placeholder="Value" />
+          <input type="text" id="modalExtra" placeholder="Extra" />
+          <button class="submit-btn" onclick="saveModalEdit()">Save</button>
+        </div>
+      </div>
+
+      <script src="user.js"></script>
+    </body>
+  </body>
+</html>

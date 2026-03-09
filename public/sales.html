@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+    <style>
+      /* RESET */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      /* BODY */
+      body {
+        display: flex;
+        background: #f4f6f9;
+      }
+
+      /* SIDEBAR MENU */
+      .menu {
+        width: 230px;
+        height: 100vh;
+        background: #2c3e50;
+        position: fixed;
+        left: 0;
+        top: 0;
+      }
+
+      .menu ul {
+        list-style: none;
+      }
+
+      .menu ul li {
+        width: 100%;
+      }
+
+      .menu ul li a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #fff;
+        text-decoration: none;
+        padding: 14px 20px;
+        transition: 0.3s;
+      }
+
+      .menu ul li a:hover {
+        background: #34495e;
+      }
+
+      .menu ul li a.active {
+        background: #1abc9c;
+      }
+
+      /* PROFILE IN SIDEBAR */
+      .profile {
+        text-align: center;
+        padding: 20px 0;
+        color: white;
+      }
+
+      .img-box {
+        width: 60px;
+        height: 60px;
+        margin: auto;
+        margin-bottom: 10px;
+      }
+
+      .img-box img {
+        width: 100%;
+        border-radius: 50%;
+      }
+
+      /* LOGOUT */
+      .log-out a {
+        color: #ff6b6b;
+      }
+
+      /* TOP BAR */
+      .topar {
+        position: fixed;
+        left: 230px;
+        top: 0;
+        width: calc(100% - 230px);
+        height: 60px;
+        background: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      /* LOGO */
+      .logo span {
+        font-size: 22px;
+        font-weight: bold;
+        color: #2c3e50;
+      }
+
+      /* RIGHT SECTION */
+      .right-section {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .profile-pic {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+      }
+
+      .profile-name {
+        font-weight: 500;
+      }
+
+      /* LOGOUT BUTTON */
+      .logout-btn {
+        padding: 7px 14px;
+        border: none;
+        background: #e74c3c;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .logout-btn:hover {
+        background: #c0392b;
+      }
+
+      /* CONTENT AREA */
+      .tab-content {
+        margin-left: 230px;
+        margin-top: 80px;
+        padding: 20px;
+      }
+
+      /* INPUT GROUP */
+      .input-group {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+      }
+
+      .input-icon {
+        position: relative;
+      }
+
+      .input-icon i {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #666;
+      }
+
+      .input-icon input,
+      .input-icon select {
+        padding: 8px 8px 8px 35px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      /* ADD BUTTON */
+      .add-btn {
+        background: #1abc9c;
+        border: none;
+        color: white;
+        padding: 8px 18px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .add-btn:hover {
+        background: #16a085;
+      }
+
+      /* TABLE */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      table th,
+      table td {
+        padding: 12px;
+        border-bottom: 1px solid #ddd;
+        text-align: left;
+      }
+
+      table th {
+        background: #2c3e50;
+        color: white;
+      }
+
+      table tr:hover {
+        background: #f1f1f1;
+      }
+      .menu {
+        background-color: #123;
+        width: 230px;
+        height: 100vh;
+        padding: 20px;
+      }
+      ul {
+        list-style: none;
+        position: absolute;
+        height: 95%;
+      }
+      ul li a {
+        display: block;
+        text-decoration: none;
+        padding: 10px;
+        margin: 0px 0%;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 40px;
+        transition: 0.5s;
+      }
+      ul li a:hover,
+      .active {
+        background-color: #ffffff55;
+        transition: color 0.3s ease;
+      }
+      .profile-name {
+        font-weight: 500;
+        color: black;
+      }
+      .profile-name {
+        font-weight: 500;
+        color: black;
+      }
+
+      .log-out {
+        position: relative;
+        bottom: 0px;
+        width: 190px;
+      }
+      .log-out a {
+        background-color: red;
+      }
+      a {
+        text-decoration: none;
+        color: white;
+      }
+      .profile-name {
+        font-weight: 500;
+        color: black;
+      }
+      .logo span {
+        display: inline-block;
+        font-size: 50px;
+        font-weight: bold;
+        font-family:
+          "Times New Roman",
+          Times,
+          serif,
+          Arial black italic;
+        color: #2c3e50;
+        animation: slideIn 1s ease-out;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="menu">
+      <ul>
+        <li class="profile">
+          <div class="img-box">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+              alt="Profile"
+            />
+          </div>
+          <h>abdulahdi</h>
+        </li>
+        <li>
+          <a href="index.html" class="active">
+            <i class="fas fa-home"></i>
+            <p>dashboard</p>
+          </a>
+        </li>
+        <li>
+          <a href="user.html">
+            <i class="fas fa-users"></i>
+            <p>users</p>
+          </a>
+        </li>
+        <li>
+          <a href="product.html">
+            <i class="fas fa-table"></i>
+            <p>products</p>
+          </a>
+        </li>
+        <li>
+          <a href="customer.html">
+            <i class="fas fa-users"></i>
+            <p>customers</p>
+          </a>
+        </li>
+        <li>
+          <a href="order-online.html">
+            <i class="fas fa-shopping-cart"></i>
+            <p>orders</p>
+          </a>
+        </li>
+        <li>
+          <a href="sales.html">
+            <i class="fas fa-chart-bar"></i>
+            <p>analytics</p>
+          </a>
+        </li>
+        <li>
+          <a href="sitting.html">
+            <i class="fas fa-cog"></i>
+            <p>settings</p>
+          </a>
+        </li>
+        <li class="log-out">
+          <a href="kgl.html">
+            <i class="fas fa-sign-out-alt"></i>
+            <p>logout</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="topar">
+      <div class="logo">
+        <span>karibu</span>
+      </div>
+      <p>sales</p>
+
+      <div class="right-section">
+        <div class="profile">
+          <img src="pictuer/OIP (9).webp" class="profile-pic" />
+          <span class="profile-name">abdulahdi</span>
+        </div>
+
+        <a href="kgl.html" class="logout-btn">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          Logout
+        </a>
+      </div>
+    </div>
+
+    <!-- Sales Tab -->
+    <div id="salesTab" class="tab-content">
+      <h2>Sales</h2>
+
+      <p>Total Sales: <span id="totalSales">0</span>ugx</p>
+      <p>Total Profit: <span id="totalProfit">0</span>ugx</p>
+      <p>Total Loss: <span id="totalLoss">0</span>ugx</p>
+      <p>Total Quantity Sold: <span id="totalQuantity">0</span></p>
+      <p>Average Sale Price: <span id="averagePrice">0</span>ugx</p>
+      <p>Best Selling Product: <span id="bestSellingProduct">N/A</span></p>
+      <p>Worst Selling Product: <span id="worstSellingProduct">N/A</span></p>
+      <canvas id="salesChart" style="height: 200px"></canvas>
+    </div>
+
+    <script>
+      // Sample sales data
+      const salesData = [
+        { product: "maize A", quantity: 10, price: 1000 },
+        { product: "suger B", quantity: 5, price: 2000 },
+        { product: "Beans C", quantity: 8, price: 1500 },
+        { product: "Banan D", quantity: 3, price: 3000 },
+        { product: "milk E", quantity: 12, price: 800 },
+      ];
+
+      // Calculate total sales, profit, loss, etc.
+      let totalSales = 0;
+      let totalProfit = 0;
+      let totalLoss = 0;
+      let totalQuantity = 0;
+      let bestSellingProduct = "";
+      let worstSellingProduct = "";
+      let maxQuantity = 0;
+      let minQuantity = Infinity;
+
+      salesData.forEach((sale) => {
+        const saleAmount = sale.quantity * sale.price;
+        totalSales += saleAmount;
+        totalProfit += saleAmount * 0.2; // Assuming a profit margin of 20%
+        totalLoss += saleAmount * 0.1; // Assuming a loss margin of 10%
+        totalQuantity += sale.quantity;
+
+        if (sale.quantity > maxQuantity) {
+          maxQuantity = sale.quantity;
+          bestSellingProduct = sale.product;
+        }
+
+        if (sale.quantity < minQuantity) {
+          minQuantity = sale.quantity;
+          worstSellingProduct = sale.product;
+        }
+      });
+
+      const averagePrice =
+        totalQuantity > 0 ? (totalSales / totalQuantity).toFixed(2) : 0;
+
+      // Update the DOM with calculated values
+      document.getElementById("totalSales").textContent =
+        totalSales.toLocaleString();
+      document.getElementById("totalProfit").textContent =
+        totalProfit.toLocaleString();
+      document.getElementById("totalLoss").textContent =
+        totalLoss.toLocaleString();
+      document.getElementById("totalQuantity").textContent = totalQuantity;
+      document.getElementById("averagePrice").textContent = averagePrice;
+      document.getElementById("bestSellingProduct").textContent =
+        bestSellingProduct || "N/A";
+      document.getElementById("worstSellingProduct").textContent =
+        worstSellingProduct || "N/A";
+
+      // Create a bar chart for sales data
+      const ctx = document.getElementById("salesChart").getContext("2d");
+      const salesChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: salesData.map((sale) => sale.product),
+          datasets: [
+            {
+              label: "Quantity Sold",
+              data: salesData.map((sale) => sale.quantity),
+              backgroundColor: "rgba(75, 192, 192, 0.6)",
+              borderColor: "rgba(75, 192, 192, 1)",
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

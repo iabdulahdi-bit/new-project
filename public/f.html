@@ -1,0 +1,639 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Final POS System</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" href="f.css" />
+
+    <style>
+      /*
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        display: flex;
+        height: 100vh;
+        background: #f4f4f4;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        direction: ltr;
+        margin: 0;
+        padding: 0;
+        background: #f0f2f5;
+      }
+      header {
+        background: #4caf50;
+        color: #fff;
+        text-align: center;
+        padding: 15px;
+        font-size: 24px;
+      }
+      .container {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 10px;
+      }
+      .left,
+      .right {
+        padding: 10px;
+      }
+      .left {
+        flex: 1;
+        min-width: 300px;
+      }
+      .right {
+        flex: 1;
+        min-width: 300px;
+      }
+
+      h2 {
+        text-align: center;
+        color: #333;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 10px;
+        background: #fff;
+      }
+      th,
+      td {
+        border: 1px solid #ccc;
+        text-align: center;
+        padding: 8px;
+      }
+      button {
+        padding: 5px 10px;
+        margin: 2px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      button.add {
+        background: #4caf50;
+        color: #fff;
+      }
+      button.delete {
+        background: #f44336;
+        color: #fff;
+      }
+      button.pdf {
+        background: #2196f3;
+        color: #fff;
+      }
+      button:hover {
+        opacity: 0.8;
+      }
+      input[type="text"],
+      input[type="number"],
+      select {
+        padding: 5px;
+        margin: 3px 0;
+        width: 80%;
+      }
+
+      #invoice {
+        background: #fff;
+        padding: 10px;
+        border-radius: 5px;
+      }
+      .qty-controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+      }
+
+      @media (max-width: 800px) {
+        .container {
+          flex-direction: column;
+        }
+      }
+      .product-banner {
+        width: 150px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 15px;
+      }
+      .topar {
+        display: flex;
+        position: fixed;
+
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 40px;
+        background: #0362fc; /* لون غامق أنيق */
+      /* display: flex;/* */
+      /* justify-content: space-between;
+
+        align-items: center;
+        padding: 0 25px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+      } */
+
+      /* اللوقو */
+      /*
+      .topar .logo span {
+        color: white;
+        font-size: 20px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        border: crimson 2px solid;
+        padding: 4px 10px;
+        size: 0caps;
+      }
+
+      /* زر تسجيل الخروج */
+      /* .logout-btn { */
+      /* display: flex; */
+      /*
+        align-items: center;
+        gap: 8px;
+        background: #ef4444;
+        color: white;
+        border: none;
+        padding: 8px 14px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: 0.3s;
+        font-size: 14px;
+        cursor: pointer;
+      }
+      a.logout-btn {
+        color: white;
+        text-decoration: none;
+      }
+
+      .logout-btn:hover {
+        background: #dc2626;
+        transform: scale(1.05);
+      }
+      .logout-btn a:hover {
+        color: white;
+        text-decoration: none;
+      }
+
+      /* الأيقونة */
+      /*
+      .logout-btn i {
+        font-size: 14px;
+      }
+      .profile-pic {
+        /* display: flex; */
+      /*
+        align-items: center;
+
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+      .profile-pic:hover {
+        transform: scale(1.1);
+        transition: 0.3s;
+      }
+      .profile-pic:active {
+        transform: scale(0.95);
+        transition: 0.1s;
+      }
+      .profile-pic:focus {
+        outline: 2px solid #0362fc;
+        outline-offset: 2px;
+      }
+      .profile-pic:focus-visible {
+        outline: 2px solid #0362fc;
+        outline-offset: 2px;
+      }
+      .topar {
+        position: fixed;
+        top: 0px;
+        left: 0px; /* نفس عرض السايدبار */
+      /*
+        right: 0;
+        height: 50px;
+        background: #007bff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 10px;
+        z-index: 100;
+      }
+
+      /* الجزء اليمين */
+      /*
+      .right-section {
+        display: flex;
+        align-items: center;
+        gap: 20px; /* مسافة بين البروفايل واللوج اوت */
+      /* } */
+
+      /* البروفايل */
+      /*
+      .profile {/*
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        color: white;
+      }
+
+      .profile-pic {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .profile-name {
+        font-weight: 500;
+      }
+
+      /* زر اللوج اوت */
+      /*
+      .logout-btn {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: #ff4d4d;
+        border: none;
+        /* padding: 6px 14px; */
+
+      /* border-radius: 6px;
+
+        color: white;
+        cursor: pointer;
+        transition: 0.3s;
+      } */
+
+      /* .logout-btn:hover {
+        background: #e60000;
+      }
+      .logout-btn a {
+        color: white;
+        text-decoration: none;
+      }
+      .logout-btn i {
+        font-size: 14px;
+      }
+      .logout-btn:hover a {
+        color: white;
+        text-decoration: none;
+      }
+      .logout-btn:hover i {
+        color: white;
+      }
+      .logout-btn:active {
+        transform: scale(0.95);
+        transition: 0.1s;
+      } */
+      .logo span {
+        display: inline-block;
+        font-size: 50px;
+        font-weight: bold;
+        font-family:
+          "Times New Roman",
+          Times,
+          serif,
+          Arial black italic;
+        color: wheat;
+        border: none;
+        background-color: none;
+        animation: slideIn 1s ease-out;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="menu">
+      <ul>
+        <li class="profile">
+          <div class="img-box">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+              alt="Profile"
+            />
+          </div>
+          <h>abdulahdi</h>
+        </li>
+        <li>
+          <a href="index.html" class="active">
+            <i class="fas fa-home"></i>
+            <p>dashboard</p>
+          </a>
+        </li>
+        <li>
+          <a href="user.html">
+            <i class="fas fa-users"></i>
+            <p>users</p>
+          </a>
+        </li>
+        <li>
+          <a href="product.html">
+            <i class="fas fa-table"></i>
+            <p>products</p>
+          </a>
+        </li>
+        <li>
+          <a href="customer.html">
+            <i class="fas fa-users"></i>
+            <p>customers</p>
+          </a>
+        </li>
+        <li>
+          <a href="order-online.html">
+            <i class="fas fa-shopping-cart"></i>
+            <p>orders</p>
+          </a>
+        </li>
+        <li>
+          <a href="sales.html">
+            <i class="fas fa-chart-bar"></i>
+            <p>analytics</p>
+          </a>
+        </li>
+        <li>
+          <a href="sitting.html">
+            <i class="fas fa-cog"></i>
+            <p>settings</p>
+          </a>
+        </li>
+        <li class="log-out">
+          <a href="kgl.html">
+            <i class="fas fa-sign-out-alt"></i>
+            <p>logout</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="topar">
+      <div class="logo">
+        <span>karibu</span>
+      </div>
+
+      <div class="right-section">
+        <div class="profile">
+          <img src="pictuer/OIP (9).webp" class="profile-pic" />
+          <span class="profile-name">abdulahdi</span>
+        </div>
+
+        <a href="kgl.html" class="logout-btn">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          Logout
+        </a>
+      </div>
+    </div>
+
+    <!-- <div class="sidebar">
+    <h1></h1>
+    <button class="dashboard-btn" onclick="location.href='index.html'"><i class="bi bi-speedometer2"></i><span>Dashboard</span></button>
+   
+    <button class="active" onclick="openTab('productTab', this)"><i class="fa-solid fa-box"></i><span>Products</span></button>
+    <button onclick="openTab('customerTab', this)"><i class="fa-solid fa-users"></i><span>Customers</span></button> 
+     
+  <button onclick="openTab('userTab', this)"><i class="fa-solid fa-user"></i><span>Users</span></button>
+  <button onclick="openTab('orderTab', this)"><i class="fa-solid fa-cart-shopping"></i><span>Orders</span></button>
+  <button onclick="openTab('salesTab', this)"><i class="fa-solid fa-chart-bar"></i><span>Sales</span></button>
+  <button onclick="openTab('reportTab', this)"><i class="fa-solid fa-file-alt"></i><span>Reports</span></button>
+  <button onclick="openTab('settingTab', this)"><i class="fa-solid fa-cog"></i><span>Settings</span></button>
+   </div> -->
+
+    <!-- <header>🛒 Final </header> -->
+
+    <div class="container">
+      <div class="left">
+        <h2>📦 Products</h2>
+        <img src="pictuer/maiz.webp" alt="Maize" class="product-banner" />
+        <img src="pictuer/milk.webp" alt="Maize" class="product-banner" />
+        <img src="pictuer/maiz1.webp" alt="Maize" class="product-banner" />
+        <select id="categoryFilter" onchange="filterCategory()">
+          <option value="All">All Categories</option>
+          <option value="Grains">Grains</option>
+          <option value="Dairy">Dairy</option>
+          <option value="Drink">Drink</option>
+          <option value="Fruit">Fruit</option>
+        </select>
+        <table id="productTable">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Add</th>
+              <th>remov</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <h3>➕ Add New Product</h3>
+        <input type="text" id="newName" placeholder="Product Name" />
+        <input type="text" id="newCategory" placeholder="Category" />
+        <input type="number" id="newPrice" placeholder="Price UGX" min="1" />
+        <button class="add" onclick="addProduct()">Add Product</button>
+      </div>
+
+      <div class="right">
+        <h2>🧾 Invoice</h2>
+        <img src="pictuer/OIP (1).webp " alt="Maize" class="product-banner" />
+        <img src="pictuer/beans.webp" alt="Beans" class="product-banner" />
+        <img src="pictuer/banan.jpg" alt="Soda" class="product-banner" />
+
+        <div id="invoice">
+          <table id="invoiceTable">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+                <th>Remove</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <h3>Total: <span id="total">0</span> UGX</h3>
+          <button class="pdf" onclick="printInvoice()">🖨 Save PDF</button>
+          <button class="delete" onclick="resetInvoice()">
+            🔄 Reset Invoice
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const { jsPDF } = window.jspdf;
+
+      let products = JSON.parse(localStorage.getItem("products")) || [
+        { name: "Beans", price: 1000, category: "Grains" },
+        { name: "Milk", price: 1000, category: "Dairy" },
+        { name: "Soda", price: 500, category: "Drink" },
+        { name: "Banana", price: 1000, category: "Fruit" },
+        { name: "Rice", price: 1000, category: "Grains" },
+        { name: "Sugar", price: 2000, category: "Dairy" },
+      ];
+
+      let invoice = JSON.parse(localStorage.getItem("invoice")) || [];
+
+      function saveLocal() {
+        localStorage.setItem("products", JSON.stringify(products));
+        localStorage.setItem("invoice", JSON.stringify(invoice));
+      }
+
+      function uniqueCategories() {
+        const cats = products.map((p) => p.category);
+        return ["All", ...new Set(cats)];
+      }
+
+      function filterCategory() {
+        const filter = document.getElementById("categoryFilter").value;
+        loadProducts(filter);
+      }
+
+      function loadProducts(filter = "All") {
+        const table = document.querySelector("#productTable tbody");
+        table.innerHTML = "";
+        document.getElementById("categoryFilter").innerHTML = "";
+        uniqueCategories().forEach((c) => {
+          let option = document.createElement("option");
+          option.value = c;
+          option.text = c;
+          document.getElementById("categoryFilter").appendChild(option);
+        });
+
+        products.forEach((product, index) => {
+          if (filter === "All" || product.category === filter) {
+            let row = `<tr>
+            <td>${product.name}</td>
+            <td>${product.category}</td>
+            <td>${product.price}</td>
+            <td><button class="add" onclick="addToInvoice(${index})">Add</button></td>
+            <td><button class="delete" onclick="removeProduct(${index})">Delete</button></td>
+        </tr>`;
+            table.innerHTML += row;
+          }
+        });
+      }
+
+      function addProduct() {
+        const name = document.getElementById("newName").value.trim();
+        const category = document.getElementById("newCategory").value.trim();
+        const price = parseInt(document.getElementById("newPrice").value);
+        if (!name || !category || !price) {
+          alert("Please fill all fields!");
+          return;
+        }
+        products.push({ name, category, price });
+        saveLocal();
+        loadProducts();
+        document.getElementById("newName").value = "";
+        document.getElementById("newCategory").value = "";
+        document.getElementById("newPrice").value = "";
+      }
+      function removeProduct(index) {
+        if (confirm("Are you sure you want to delete this product?")) {
+          products.splice(index, 1);
+          saveLocal();
+          loadProducts();
+        }
+      }
+
+      function addToInvoice(index) {
+        const product = products[index];
+        const existing = invoice.find((i) => i.name === product.name);
+        if (existing) {
+          existing.qty += 1;
+          existing.subtotal = existing.qty * product.price;
+        } else {
+          invoice.push({ name: product.name, qty: 1, subtotal: product.price });
+        }
+        saveLocal();
+        renderInvoice();
+      }
+
+      function renderInvoice() {
+        const tbody = document.querySelector("#invoiceTable tbody");
+        tbody.innerHTML = "";
+        let total = 0;
+        invoice.forEach((item, idx) => {
+          total += item.subtotal;
+          let row = `<tr>
+            <td>${item.name}</td>
+            <td>
+            <div class="qty-controls">
+                <button onclick="updateQty(${idx},-1)">-</button>
+                ${item.qty}
+                <button onclick="updateQty(${idx},1)">+</button>
+            </div>
+            </td>
+            <td>${item.subtotal} UGX</td>
+            <td><button class="delete" onclick="removeItem(${idx})">Remove</button></td>
+        </tr>`;
+          tbody.innerHTML += row;
+        });
+        document.getElementById("total").innerText = total;
+        saveLocal();
+      }
+
+      function updateQty(index, change) {
+        invoice[index].qty += change;
+        if (invoice[index].qty <= 0) {
+          invoice.splice(index, 1);
+        } else {
+          const p = products.find((p) => p.name === invoice[index].name);
+          invoice[index].subtotal = p.price * invoice[index].qty;
+        }
+        renderInvoice();
+      }
+
+      function removeItem(index) {
+        invoice.splice(index, 1);
+        renderInvoice();
+      }
+
+      function resetInvoice() {
+        if (confirm("Do you want to reset the invoice?")) {
+          invoice = [];
+          renderInvoice();
+        }
+      }
+
+      function printInvoice() {
+        const doc = new jsPDF({ orientation: "p", unit: "mm", format: "a4" });
+        doc.setFontSize(16);
+        doc.text("🧾 Sales Invoice", 105, 15, null, null, "center");
+        doc.setFontSize(12);
+        let y = 30;
+        invoice.forEach((item) => {
+          doc.text(`${item.name} x${item.qty} = ${item.subtotal} UGX`, 20, y);
+          y += 10;
+        });
+        doc.setFontSize(14);
+        doc.text(
+          `Total: ${document.getElementById("total").innerText} UGX`,
+          20,
+          y + 10,
+        );
+        const date = new Date().toLocaleString();
+        doc.setFontSize(10);
+        doc.text(`Date: ${date}`, 20, y + 20);
+        doc.save("Invoice.pdf");
+      }
+
+      // Load on start
+      loadProducts();
+      renderInvoice();
+    </script>
+  </body>
+</html>

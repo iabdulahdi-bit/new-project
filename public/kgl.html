@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>kgl Groceries</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        /* background: url(b.jpg); */
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .login-container {
+        background: #fff;
+        padding: 25px;
+        width: 300px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .login-container h2 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .login-container input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 12px;
+      }
+
+      .login-container button {
+        width: 100%;
+        padding: 10px;
+        background: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+
+      .login-container button:hover {
+        background: wheat;
+      }
+
+      /* Toast Styles */
+      #toast-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+      }
+
+      .toast {
+        min-width: 250px;
+        margin-bottom: 10px;
+        padding: 15px;
+        color: #fff;
+        border-radius: 5px;
+        animation: slideIn 0.5s ease;
+      }
+
+      .toast.success {
+        background-color: #28a745;
+      }
+
+      .toast.error {
+        background-color: #dc3545;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateX(100%);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+      /* dashboard */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      /* ================= LAYOUT ================= */
+      body {
+        display: flex;
+        min-height: 100vh;
+        background-color: #f4f6f8;
+      }
+
+      /* ================= SIDEBAR ================= */
+      .sidebar {
+        width: 230px;
+        background-color: #0a3d62;
+        padding: 20px;
+      }
+
+      .logo {
+        color: #ffffff;
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .sidebar nav a {
+        display: block;
+        color: #ecf0f1;
+        text-decoration: none;
+        padding: 12px;
+        margin-bottom: 8px;
+        border-radius: 6px;
+        transition: background 0.3s ease;
+      }
+
+      .sidebar nav a:hover,
+      .sidebar nav a.active {
+        background-color: #1e90ff;
+      }
+
+      /* ================= MAIN ================= */
+      .main {
+        flex: 1;
+        padding: 30px;
+      }
+
+      .page-header h1 {
+        margin-bottom: 25px;
+        color: #0a3d62;
+      }
+
+      /* ================= CARDS ================= */
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+      }
+
+      .card {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .card h3 {
+        color: #555;
+        margin-bottom: 10px;
+        font-weight: normal;
+      }
+
+      .card p {
+        font-size: 26px;
+        font-weight: bold;
+        color: #0a3d62;
+      }
+      /* user */
+      body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #4e73df, #1cc88a);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      form {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        width: 350px;
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+
+      label {
+        font-weight: bold;
+        font-size: 14px;
+        color: #555;
+      }
+
+      input {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        outline: none;
+        transition: 0.3s;
+      }
+
+      input:focus {
+        border-color: #4e73df;
+        box-shadow: 0 0 5px rgba(78, 115, 223, 0.5);
+      }
+
+      button {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background: #4e73df;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      button:hover {
+        background: #2e59d9;
+      }
+      /* quantity */
+    </style>
+  </head>
+
+  <body>
+    <div class="login-container">
+      <h1>kgl Groceries login</h1>
+      <input type="text" id="username" placeholder="username" />
+      <input type="password" id="password" placeholder="password" />
+      <a href="index.html"><button id="loginBtn">login</button></a>
+    </div>
+    <div id="toast-container"></div>
+    <script>
+      if (!localStorage.getItem("registeredUser")) {
+        const defaultUser = {
+          username: "kgl_admin",
+          password: "groceries2026",
+          role: "Manager",
+        };
+        localStorage.setItem("registeredUser", JSON.stringify(defaultUser));
+      }
+
+      // Toast function
+      function showToast(message, type) {
+        const toastContainer = document.getElementById("toast-container");
+
+        const toast = document.createElement("div");
+        toast.classList.add("toast", type);
+        toast.innerText = message;
+
+        toastContainer.appendChild(toast);
+
+        setTimeout(() => {
+          toast.remove();
+        }, 3000);
+      }
+
+      // Login Logic
+      document
+        .getElementById("loginBtn")
+        .addEventListener("click", function () {
+          const username = document.getElementById("username").value.trim();
+          const password = document.getElementById("password").value.trim();
+
+          if (username === "magdigard8@gmial.com" || password === " Wapday") {
+            showToast("Please enter both username and password.", "error");
+            return;
+          }
+
+          const storedUser = JSON.parse(localStorage.getItem("registeredUser"));
+
+          if (username !== storedUser.username) {
+            showToast("Username does not exist.", "error");
+            return;
+          }
+
+          if (password !== storedUser.password) {
+            showToast("Incorrect password. Please try again.", "error");
+            return;
+          }
+
+          // Successful login
+          const sessionUser = {
+            username: storedUser.username,
+            role: storedUser.role,
+          };
+
+          localStorage.setItem("currentSession", JSON.stringify(sessionUser));
+          showToast("Login successful!", "success");
+
+          setTimeout(() => {
+            window.location.href = "dashboard.html";
+          }, 1000);
+        });
+    </script>
+  </body>
+</html>
