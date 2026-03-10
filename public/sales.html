@@ -370,16 +370,29 @@
 
     <!-- Sales Tab -->
     <div id="salesTab" class="tab-content">
-      <h2><span class="m-style">M</span> Sales</h2>
-
-      <p>Total Sales: <span id="totalSales">0</span>ugx</p>
-      <p>Total Profit: <span id="totalProfit">0</span>ugx</p>
-      <p>Total Loss: <span id="totalLoss">0</span>ugx</p>
-      <p>Total Quantity Sold: <span id="totalQuantity">0</span>Units</p>
-      <p>Average Sale Price: <span id="averagePrice">0</span>UGX</p>
-      <p>Best Selling Product: <span id="bestSellingProduct">N/A</span></p>
-      <p>Worst Selling Product: <span id="worstSellingProduct">N/A</span></p>
-      <canvas id="salesChart" style="height: 200px"></canvas>
+      <div class="container mb-5">
+        <h2><span class="m-style">M</span> Sales</h2>
+        <p>Total Sales: <span id="totalSales">0</span>ugx</p>
+        <p>Total Profit: <span id="totalProfit">0</span>ugx</p>
+        <p>Total Loss: <span id="totalLoss">0</span>ugx</p>
+        <p>Total Quantity Sold: <span id="totalQuantity">0</span>Units</p>
+        <p>Average Sale Price: <span id="averagePrice">0</span>UGX</p>
+        <p>Best Selling Product: <span id="bestSellingProduct">N/A</span></p>
+        <p>Worst Selling Product: <span id="worstSellingProduct">N/A</span></p>
+        <canvas id="salesChart" style="height: 200px" class="mb-5"></canvas>
+      </div>
+      <div class="container mt-5">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Quantity Sold</th>
+              <th>Sale Price (UGX)</th>
+            </tr>
+          </thead>
+          <tbody id="salesTableBody"></tbody>
+        </table>
+      </div>
     </div>
 
     <script>
@@ -461,6 +474,31 @@
           },
         },
       });
+
+      // Populate the sales table
+      const API_URL = "http://localhost:3000";
+      const salesTableBody = document.getElementById("salesTableBody");
+      async function displaySales() {
+        try {
+          const response = await fetch(`${API_URL}/getSales`);
+          const sales = await response.json();
+          console.log(sales);
+          salesTableBody.innerHTML = "";
+          sales.sales.forEach((sale) => {
+            saleString = `
+            <tr>
+              <td>${sale.product}</td>
+              <td>${sale.quantity}</td>
+              <td>${sale.price.toLocaleString()}</td>
+            </tr>
+            `;
+            salesTableBody.innerHTML += saleString;
+          });
+        } catch (error) {
+          console.error("Error fetching sales data:", error);
+        }
+      }
+      displaySales();
     </script>
   </body>
 </html>
