@@ -277,6 +277,14 @@
         animation: slideIn 1s ease-out;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
       }
+      .m-style {
+        color: #1abc9c;
+        font-size: 40px;
+        font-weight: bold;
+        font-family: "Times New Roman", serif;
+        margin-right: 8px;
+        text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+      }
     </style>
   </head>
   <body>
@@ -362,13 +370,13 @@
 
     <!-- Sales Tab -->
     <div id="salesTab" class="tab-content">
-      <h2>Sales</h2>
+      <h2><span class="m-style">M</span> Sales</h2>
 
       <p>Total Sales: <span id="totalSales">0</span>ugx</p>
       <p>Total Profit: <span id="totalProfit">0</span>ugx</p>
       <p>Total Loss: <span id="totalLoss">0</span>ugx</p>
-      <p>Total Quantity Sold: <span id="totalQuantity">0</span></p>
-      <p>Average Sale Price: <span id="averagePrice">0</span>ugx</p>
+      <p>Total Quantity Sold: <span id="totalQuantity">0</span>Units</p>
+      <p>Average Sale Price: <span id="averagePrice">0</span>UGX</p>
       <p>Best Selling Product: <span id="bestSellingProduct">N/A</span></p>
       <p>Worst Selling Product: <span id="worstSellingProduct">N/A</span></p>
       <canvas id="salesChart" style="height: 200px"></canvas>
